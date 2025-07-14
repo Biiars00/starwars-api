@@ -117,12 +117,15 @@ A aplicação está pronta para CI/CD:
 
 ## 🪐 Endpoints principais
 
+- **Localhost:** `http://localhost:8000`
+- **Deploy Cloud Run:** `https://starwars-api-821347683149.southamerica-east1.run.app`
+
 | Método | URL              | Desccrição                                            |
 | ------ | ---------------- | ----------------------------------------------------- |
 | POST    | /signup         | Cadastra usuário                                      |
 | POST    | /login          | Autentica usuário cadastrado                          |
-| GET    | /{resource}      | Lista recursos da [API Star Wars](http://swapi.info/) |
-| GET    | /{resource}/{id} | Busca um recurso específico                           |
+| GET    | /starwars/{resource}      | Lista recursos da [API Star Wars](http://swapi.info/) |
+| GET    | /starwars/{resource}/{id} | Busca um recurso específico                           |
 
 > resource: string | id: int
 
@@ -134,29 +137,81 @@ Exemplos de recursos:
 - "vehicles"
 - "starships"
 
-Modelos de respostas JSON:
+#### Modelos de body JSON:
 
-- "characters":
+| /signup |
+| ------- |
 ```json
    {
-      "name": "string",
-      "height": "string",
-      "mass": "string",
-      "hair_color": "string",
-      "skin_color": "string",
-      "eye_color": "string",
-      "birth_year": "string",
-      "gender": "string",
-      "homeworld": "string",
-      "films": ["string"],
-      "species": ["string"],
-      "vehicles": ["string"],
-      "starships": ["string"]
+      "name": "Beatriz Ribeiro",
+      "email": "biiar@powerofdata.com.br",
+      "password": "success2025"
+   }
+```
+
+| /login |
+| ------ |
+```json
+   {
+      "email": "biiar@powerofdata.com.br",
+      "password": "success2025"
+   }
+```
+
+#### Modelos de respostas JSON:
+
+| /signup |
+| ----------- |
+```json
+   {
+      "message": "User created successfully!",
+      "uid": "xxxx"
+   }
+```
+
+| /login |
+| ----------- |
+```json
+   {
+      "idToken": "xxxx",
+      "refreshToken": "xxxx",
+      "uid": "xxxx"
+   }
+```
+
+| /starwars/{resource} |
+| ----------- |
+
+- "people":
+```json
+   {
+      "page": 1,
+      "page_size": 1,
+      "total_pages": 1,
+      "total_items": 1,
+      "items": [
+         {
+            "name": "string",
+            "height": "string",
+            "mass": "string",
+            "hair_color": "string",
+            "skin_color": "string",
+            "eye_color": "string",
+            "birth_year": "string",
+            "gender": "string",
+            "homeworld": "string",
+            "films": ["string"],
+            "species": ["string"],
+            "vehicles": ["string"],
+            "starships": ["string"]
+         }
+      ]
    }
   ```
     
 - "films":
 ```json
+   ...
    {
       "title": "string",
       "episode_id": "string",
@@ -174,6 +229,7 @@ Modelos de respostas JSON:
 
 - "planets":
 ```json
+   ....
    {
     "name": "string",
     "rotation_period": "string",
@@ -191,6 +247,7 @@ Modelos de respostas JSON:
 
 - "species":
 ```json
+   ...
    {
       "name": "string",
       "classification": "string",
@@ -209,6 +266,7 @@ Modelos de respostas JSON:
   
   - "vehicles":
 ```json
+   ...
    {
       "name": "string",
       "model": "string",
@@ -228,6 +286,7 @@ Modelos de respostas JSON:
   
 - "starships":
 ```json
+   ...
     {
       "name": "string",
       "model": "string",
@@ -246,6 +305,34 @@ Modelos de respostas JSON:
       "films": ["string"]
    }
   ```
+
+| /starwars/{resource}/{id} |
+| ----------- |
+> Retorna um objeto (Dict) específico do items.
+
+#### Exemplos de funcionalidades suportadas
+
+✅ Busca (search)
+- Para films, busca pelo `title`. 
+- Para demais recursos, busca pelo `name`.
+
+✅ Ordenação (order_by, order)
+- Para `films`, ordena por `title`.
+- Para demais recursos, ordena por `name`.
+- order=asc ou order=desc.
+
+✅ Paginação
+- Padrão de 5 itens por página.
+- Retorna: `page`, `page_size`, `total_pages`, `total_items`, `items`.
+
+#### Exemplos de uso
+   1. Listar todos os planetas ordenados por nome crescente: `GET /starwars/planets?order_by=name&order=asc`
+
+   2. Buscar por personagem chamado Luke: `GET /starwars/characters?name=Luke`
+
+   3. Listar filmes ordenados por título decrescente: `GET /starwars/films?order_by=title&order=desc`
+
+   5. Filtrar planetas e exibir a segunda página: `GET /starwars/planets?&page=5`
 
 ## 🙌 Contribuição
 - Fork este repositório
