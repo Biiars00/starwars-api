@@ -89,7 +89,7 @@ class StarWarsStarships(BaseModel):
     films: List[str]
     
 RESOURCE_MODEL_MAP = {
-    "characters": StarWarsPeople,
+    "people": StarWarsPeople,
     "films": StarWarsFilms,
     "planets": StarWarsPlanets,
     "species": StarWarsSpecies,
