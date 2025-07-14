@@ -1,0 +1,8 @@
+firebase_connection.json
+.env
+venv
+prod.env
+.pytest_cache
+__pycache__
+prod.yaml
+.coverage
