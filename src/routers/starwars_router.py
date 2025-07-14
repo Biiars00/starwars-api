@@ -2,8 +2,6 @@ from fastapi import APIRouter, Depends, Query
 from src.models.starwars_interface import QueryParams
 from src.config.auth.firebase_auth import verify_token
 from src.controllers.starwars_controller import (
-    get_character_with_most_films_controller,
-    get_planet_with_biggest_population_controller,
     get_starwars_controller, 
     get_by_id_starwars_controller
 )

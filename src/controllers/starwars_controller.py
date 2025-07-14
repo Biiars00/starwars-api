@@ -1,6 +1,5 @@
-from typing import Optional
 from fastapi import Depends, HTTPException
-from src.services.starwars_service import get_character_with_most_films_service, get_planet_with_biggest_population_service, get_starwars_service, get_by_id_starwars_service
+from src.services.starwars_service import get_starwars_service, get_by_id_starwars_service
 from src.models.starwars_interface import QueryParams
 
 def get_starwars_controller(
